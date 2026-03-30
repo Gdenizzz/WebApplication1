@@ -35,3 +35,31 @@ mikroservis-proje/
 │
 ├── docker-compose.yml
 └── README.md
+
+
+
+
+
+
+
+WebApplication1/
+├── docker-compose.yml          
+├── auth-service
+│   ├── Dockerfile              
+│   ├── requirements.txt        
+│   └── database.py             
+├── product-service
+│   ├── Dockerfil
+│   ├── requirements.tx
+│   └── database.py             
+├── order-service
+│   ├── Dockerfil
+│   ├── requirements.tx
+│   ├── database.py             
+│   └── routes.py               
+└── dispatcher
+    ├── Dockerfil
+    ├── requirements.tx
+    ├── auth_client.py          
+    ├── product_client.py       
+    └── order_client.py         

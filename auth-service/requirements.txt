@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+pymongo
+bcrypt
+python-jose[cryptography]
+pydantic[email]
+prometheus-fastapi-instrumentator

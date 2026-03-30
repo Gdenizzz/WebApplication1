@@ -6,7 +6,7 @@ from datetime import datetime
 
 router = APIRouter(prefix="/orders", tags=["Orders"])
 
-PRODUCT_SERVICE_URL = "http://127.0.0.1:8002"
+PRODUCT_SERVICE_URL = "http://product-service:8001"
 
 
 @router.post("/", response_model=OrderResponse)
@@ -59,8 +59,8 @@ def create_order(payload: OrderCreateRequest):
         total_price=total_price,
         status="created"
     )
-    
-    
+
+
 @router.get("/", response_model=list[OrderResponse])
 def get_orders():
     orders = []
@@ -74,4 +74,8 @@ def get_orders():
             status=order["status"]
         ))
 
-    return orders    
+    return orders
+
+
+
+

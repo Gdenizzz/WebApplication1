@@ -1,9 +1,9 @@
 from pymongo import MongoClient
 
-MONGO_URL = "mongodb://localhost:27017"
+MONGO_URI = "mongodb://mongodb:27017/"
+DATABASE_NAME = "product_db"
 
-client = MongoClient(MONGO_URL)
-
-db = client["product_db"]
+client = MongoClient(MONGO_URI)
+db = client[DATABASE_NAME]
 
 products_collection = db["products"]
