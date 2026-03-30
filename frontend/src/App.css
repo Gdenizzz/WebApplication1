@@ -1,0 +1,263 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f0f1a;
+  color: #e0e0e0;
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-container {
+  background: #1a1a2e;
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.auth-container h1 {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 24px;
+  color: #7c83fd;
+}
+
+.tab-buttons {
+  display: flex;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #2a2a4a;
+}
+
+.tab-buttons button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: #0f0f1a;
+  color: #888;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.tab-buttons button.active {
+  background: #7c83fd;
+  color: white;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #aaa;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px 14px;
+  background: #0f0f1a;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #7c83fd;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  background: #7c83fd;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+
+.btn:hover {
+  background: #5a63f5;
+}
+
+.btn-danger {
+  background: #e05c5c;
+}
+
+.btn-danger:hover {
+  background: #c04444;
+}
+
+.btn-secondary {
+  background: #2a2a4a;
+}
+
+.btn-secondary:hover {
+  background: #3a3a6a;
+}
+
+.error {
+  color: #e05c5c;
+  font-size: 13px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.success {
+  color: #5ce05c;
+  font-size: 13px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.dashboard {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  background: #1a1a2e;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #2a2a4a;
+}
+
+.navbar h2 {
+  color: #7c83fd;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  background: #2a2a4a;
+  color: #e0e0e0;
+  transition: background 0.2s;
+}
+
+.nav-buttons button.active {
+  background: #7c83fd;
+  color: white;
+}
+
+.nav-buttons button:hover {
+  background: #7c83fd;
+  color: white;
+}
+
+.content {
+  flex: 1;
+  padding: 32px;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.card {
+  background: #1a1a2e;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 16px;
+  border: 1px solid #2a2a4a;
+}
+
+.card h3 {
+  color: #7c83fd;
+  margin-bottom: 16px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.product-card {
+  background: #0f0f1a;
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid #2a2a4a;
+}
+
+.product-card h4 {
+  color: #e0e0e0;
+  margin-bottom: 8px;
+}
+
+.product-card .price {
+  color: #7c83fd;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.product-card .stock {
+  color: #888;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.order-item {
+  background: #0f0f1a;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+  border: 1px solid #2a2a4a;
+}
+
+.order-item .order-id {
+  color: #888;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.order-item .order-total {
+  color: #7c83fd;
+  font-weight: bold;
+}
+
+.order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.loading {
+  text-align: center;
+  color: #888;
+  padding: 32px;
+}

@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from auth_client import verify_token
 from product_client import get_products
@@ -8,6 +9,15 @@ from fastapi import Body
 from prometheus_fastapi_instrumentator import Instrumentator
 
 app = FastAPI(title="Dispatcher Service")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 Instrumentator().instrument(app).expose(app)
 security = HTTPBearer()
 
