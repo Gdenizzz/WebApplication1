@@ -11,3 +11,11 @@ def get_products():
     except Exception as e:
         print("Product service error:", e)
         return []
+
+def create_product(payload: dict):
+    try:
+        response = requests.post(f"{PRODUCT_SERVICE_URL}/products/", json=payload)
+        return response.json()
+    except Exception as e:
+        print("Product service error:", e)
+        return {"error": str(e)}

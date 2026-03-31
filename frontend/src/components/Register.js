@@ -63,13 +63,6 @@ function Register({ onRegister }) {
                     required
                 />
             </div>
-            <div className="form-group">
-                <label>Rol</label>
-                <select name="role" value={form.role} onChange={handleChange}>
-                    <option value="customer">Customer</option>
-                    <option value="admin">Admin</option>
-                </select>
-            </div>
             {error && <p className="error">{error}</p>}
             {success && <p className="success">{success}</p>}
             <button type="submit" className="btn">Kayıt Ol</button>

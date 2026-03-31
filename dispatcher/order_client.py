@@ -10,9 +10,12 @@ def create_order(payload: dict):
         print("Order service error:", e)
         return {"error": str(e)}
 
-def get_orders():
+def get_orders(user_id: str = None):
     try:
-        response = requests.get(f"{ORDER_SERVICE_URL}/orders/")
+        url = f"{ORDER_SERVICE_URL}/orders/"
+        if user_id:
+            url += f"?user_id={user_id}"
+        response = requests.get(url)
         if response.status_code == 200:
             return response.json()
         return []

@@ -27,6 +27,9 @@ def create_order(payload: OrderCreateRequest):
         if not matched_product:
             raise HTTPException(status_code=404, detail=f"Ürün bulunamadı: {item.product_id}")
 
+        if matched_product["stock"] < item.quantity:
+            raise HTTPException(status_code=400, detail=f"{matched_product['name']} için yeterli stok yok")
+
         unit_price = matched_product["price"]
         line_total = unit_price * item.quantity
 
@@ -40,6 +43,12 @@ def create_order(payload: OrderCreateRequest):
 
         order_items.append(order_item)
         total_price += line_total
+
+    for item in payload.items:
+        requests.patch(
+            f"{PRODUCT_SERVICE_URL}/products/{item.product_id}/stock",
+            json={"quantity": item.quantity}
+        )
 
     new_order = {
         "user_id": payload.user_id,
@@ -62,10 +71,12 @@ def create_order(payload: OrderCreateRequest):
 
 
 @router.get("/", response_model=list[OrderResponse])
-def get_orders():
+def get_orders(user_id: str = None):
     orders = []
-
-    for order in orders_collection.find():
+    query = {}
+    if user_id:
+        query = {"user_id": user_id}
+    for order in orders_collection.find(query):
         orders.append(OrderResponse(
             id=str(order["_id"]),
             user_id=order["user_id"],
@@ -73,9 +84,4 @@ def get_orders():
             total_price=order["total_price"],
             status=order["status"]
         ))
-
     return orders
-
-
-
-

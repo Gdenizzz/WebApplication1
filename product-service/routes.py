@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from database import products_collection
 from models import ProductResponse
+from bson import ObjectId
 
 router = APIRouter(prefix="/products", tags=["Products"])
 
@@ -48,3 +49,16 @@ def create_product(payload: ProductCreateRequest):
         "message": "Ürün eklendi",
         "product_id": str(result.inserted_id)
     }
+
+
+
+# Stok güncelleme endpoint'i order-service tarafından çağrılacak
+@router.patch("/{product_id}/stock")
+def update_stock(product_id: str, payload: dict):
+    quantity = payload.get("quantity", 0)
+    products_collection.update_one(
+        {"_id": ObjectId(product_id)},
+        {"$inc": {"stock": -quantity}}
+    )
+    return {"message": "Stok güncellendi"}
+

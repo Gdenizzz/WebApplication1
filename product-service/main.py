@@ -1,14 +1,21 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from routes import router as product_router
 from prometheus_fastapi_instrumentator import Instrumentator
 
 app = FastAPI(title="Product Service")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(product_router)
 Instrumentator().instrument(app).expose(app)
 
 @app.get("/")
 def root():
     return {"message": "Product Service is running"}
-
-
-

@@ -2,9 +2,8 @@ from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from auth_client import verify_token
-from product_client import get_products
-from order_client import create_order
-from order_client import get_orders
+from product_client import get_products, create_product
+from order_client import create_order, get_orders
 from fastapi import Body
 from prometheus_fastapi_instrumentator import Instrumentator
 
@@ -35,10 +34,7 @@ def protected_route(credentials: HTTPAuthorizationCredentials = Depends(security
     user = verify_token(token)
     if not user:
         raise HTTPException(status_code=401, detail="Unauthorized")
-    return {
-        "message": "Access granted",
-        "user": user
-    }
+    return {"message": "Access granted", "user": user}
 
 @app.get("/products")
 def dispatcher_products(credentials: HTTPAuthorizationCredentials = Depends(security)):
@@ -47,10 +43,21 @@ def dispatcher_products(credentials: HTTPAuthorizationCredentials = Depends(secu
     if not user:
         raise HTTPException(status_code=401, detail="Unauthorized")
     products = get_products()
-    return {
-        "user": user,
-        "products": products
-    }
+    return {"user": user, "products": products}
+
+@app.post("/products")
+def dispatcher_create_product(
+    payload: dict = Body(...),
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    token = credentials.credentials
+    user = verify_token(token)
+    if not user:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+    if user.get("role") != "admin":
+        raise HTTPException(status_code=403, detail="Bu islem icin admin yetkisi gerekiyor")
+    result = create_product(payload)
+    return result
 
 @app.post("/orders")
 def dispatcher_create_order(
@@ -71,12 +78,8 @@ def dispatcher_get_orders(credentials: HTTPAuthorizationCredentials = Depends(se
     user = verify_token(token)
     if not user:
         raise HTTPException(status_code=401, detail="Unauthorized")
-    orders = get_orders()
+    orders = get_orders(user["email"])
     return {
         "user": user,
         "orders": orders
     }
-
-
-
-
