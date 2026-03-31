@@ -86,10 +86,26 @@ sequenceDiagram
 
 ## Yuk Testi
 
-Locust ile yuk testi yapmak icin:
-````bash
+Locust ile 3 farklı kullanıcı seviyesinde yük testi yapılmıştır.
+
+### Test Sonuclari
+
+| Kullanici | RPS | Hata Orani | Ort. Yanis Suresi |
+|---|---|---|---|
+| 10 | 4.88 | %0 | 120 ms |
+| 50 | 18.5 | %0 | 129 ms |
+| 100 | 26.1 | %0 | 644 ms |
+
+### Yorum
+
+10 ve 50 kullanici seviyesinde sistem stabil calismis, yanit sureleri dusuk kalmistir.
+100 kullanicida RPS artmaya devam etmis ancak yanit suresi 644ms'ye yukselmeye baslamistir.
+Tum testlerde hata orani %0 olarak gerceklesmistir.
+
+### Calistirma
+```bash
 locust -f locustfile.py
-````
+```
 
 Tarayicidan `http://localhost:8089` adresine giderek test parametrelerini ayarlayabilirsiniz.
 
