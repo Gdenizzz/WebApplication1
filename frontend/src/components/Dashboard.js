@@ -3,6 +3,8 @@ import Products from './Products';
 import Orders from './Orders';
 import CreateOrder from './CreateOrder';
 import AddProduct from './AddProduct';
+import Logs from './Logs';
+import Monitoring from './Monitoring';
 import { jwtDecode } from 'jwt-decode';
 
 function Dashboard({ token, onLogout }) {
@@ -25,32 +27,30 @@ function Dashboard({ token, onLogout }) {
             <div className="navbar">
                 <h2>Microservices App</h2>
                 <div className="nav-buttons">
-                    <button
-                        className={page === 'products' ? 'active' : ''}
-                        onClick={() => setPage('products')}
-                    >
+                    <button className={page === 'products' ? 'active' : ''} onClick={() => setPage('products')}>
                         Urunler
                     </button>
                     {role === 'admin' && (
-                        <button
-                            className={page === 'add-product' ? 'active' : ''}
-                            onClick={() => setPage('add-product')}
-                        >
+                        <button className={page === 'add-product' ? 'active' : ''} onClick={() => setPage('add-product')}>
                             Urun Ekle
                         </button>
                     )}
-                    <button
-                        className={page === 'orders' ? 'active' : ''}
-                        onClick={() => setPage('orders')}
-                    >
+                    <button className={page === 'orders' ? 'active' : ''} onClick={() => setPage('orders')}>
                         Siparislerim
                     </button>
-                    <button
-                        className={page === 'create-order' ? 'active' : ''}
-                        onClick={() => setPage('create-order')}
-                    >
+                    <button className={page === 'create-order' ? 'active' : ''} onClick={() => setPage('create-order')}>
                         Siparis Olustur
                     </button>
+                    {role === 'admin' && (
+                        <button className={page === 'logs' ? 'active' : ''} onClick={() => setPage('logs')}>
+                            Trafik Loglari
+                        </button>
+                    )}
+                    {role === 'admin' && (
+                        <button className={page === 'monitoring' ? 'active' : ''} onClick={() => setPage('monitoring')}>
+                            Izleme
+                        </button>
+                    )}
                     <div style={{ color: '#aaa', fontSize: '13px', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', marginRight: '8px' }}>
                         <span style={{ color: '#e0e0e0' }}>{email}</span>
                         <span style={{ color: role === 'admin' ? '#f5a623' : '#7c83fd' }}>{role}</span>
@@ -65,6 +65,8 @@ function Dashboard({ token, onLogout }) {
                 {page === 'add-product' && role === 'admin' && <AddProduct token={token} onSuccess={() => setPage('products')} />}
                 {page === 'orders' && <Orders token={token} />}
                 {page === 'create-order' && <CreateOrder token={token} onSuccess={() => setPage('orders')} />}
+                {page === 'logs' && role === 'admin' && <Logs token={token} />}
+                {page === 'monitoring' && role === 'admin' && <Monitoring token={token} />}
             </div>
         </div>
     );

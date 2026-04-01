@@ -20,7 +20,7 @@ function Register({ onRegister }) {
         setError('');
         setSuccess('');
         try {
-            await axios.post('http://localhost:8000/auth/register', form);
+            await axios.post('http://localhost:8003/auth/register', form);
             setSuccess('Kayıt başarılı! Giriş yapabilirsiniz.');
             setTimeout(() => onRegister(), 1500);
         } catch (err) {
@@ -37,8 +37,7 @@ function Register({ onRegister }) {
                     name="full_name"
                     value={form.full_name}
                     onChange={handleChange}
-                    placeholder="Ayşe Kaya"
-                    required
+                    placeholder="İsim Soyisim"
                 />
             </div>
             <div className="form-group">

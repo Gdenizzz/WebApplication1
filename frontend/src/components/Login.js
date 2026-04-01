@@ -10,7 +10,7 @@ function Login({ onLogin }) {
         e.preventDefault();
         setError('');
         try {
-            const res = await axios.post('http://localhost:8000/auth/login', {
+            const res = await axios.post('http://localhost:8003/auth/login', {
                 email,
                 password,
             });

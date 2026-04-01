@@ -1,28 +1,27 @@
 version: "3.9"
 
 networks:
-  microservices-net:
+  public-net:
     driver: bridge
+  private-net:
+    driver: bridge
+    internal: true
 
 services:
 
   mongodb:
     image: mongo:7
     container_name: mongodb
-    ports:
-      - "27017:27017"
     networks:
-      - microservices-net
+      - private-net
     volumes:
       - mongo-data:/data/db
 
   auth-service:
     build: ./auth-service
     container_name: auth-service
-    ports:
-      - "8000:8000"
     networks:
-      - microservices-net
+      - private-net
     depends_on:
       - mongodb
     environment:
@@ -31,10 +30,8 @@ services:
   product-service:
     build: ./product-service
     container_name: product-service
-    ports:
-      - "8001:8001"
     networks:
-      - microservices-net
+      - private-net
     depends_on:
       - mongodb
     environment:
@@ -43,10 +40,8 @@ services:
   order-service:
     build: ./order-service
     container_name: order-service
-    ports:
-      - "8002:8002"
     networks:
-      - microservices-net
+      - private-net
     depends_on:
       - mongodb
       - product-service
@@ -59,7 +54,8 @@ services:
     ports:
       - "8003:8003"
     networks:
-      - microservices-net
+      - public-net
+      - private-net
     depends_on:
       - auth-service
       - product-service
@@ -68,10 +64,8 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
-    ports:
-      - "9090:9090"
     networks:
-      - microservices-net
+      - private-net
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
 
@@ -81,14 +75,17 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - microservices-net
+      - public-net
+      - private-net
     depends_on:
       - prometheus
     volumes:
       - grafana-data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
 
 volumes:
   mongo-data:
   grafana-data:
-
-
