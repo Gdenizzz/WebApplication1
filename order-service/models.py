@@ -26,3 +26,16 @@ class OrderResponse(BaseModel):
     items: List[OrderItemResponse]
     total_price: float
     status: str
+    
+    
+    
+#OPSİYONELL    
+#class tester()BaseModel:    
+#
+#    id: str
+#    user_id: str
+#    items: List[OrderItemResponse]
+#    total_price: float
+#    status: str  
+
+  
