@@ -202,6 +202,7 @@ sequenceDiagram
 ---
 
 ## 3. Proje Yapisi ve Moduller
+
 ```
 WebApplication1/
 ├── docker-compose.yml
@@ -266,6 +267,7 @@ WebApplication1/
 ### Network Izolasyonu
 
 Projede iki ayri Docker networku tanimlanmistir. Sadece Dispatcher ve Grafana dis dunyaya acikken diger tum servisler yalnizca ic agda calismaktadir.
+
 ```mermaid
 graph TD
     Internet["Dis Dunya"]
@@ -300,6 +302,7 @@ graph TD
 - Node.js
 
 ### Calistirma
+
 ```bash
 # Servisleri baslat
 docker compose up --build
@@ -314,17 +317,72 @@ locust -f locustfile.py
 
 ---
 
-## 5. Test Senaryolari ve Sonuclar
+## 5. Uygulama Ekran Goruntuleri ve Test Sonuclari
+
+### React Arayuzu
+
+**Urunler Sayfasi** — Admin rolüyle giris yapildiktan sonra urun listesi goruntulenmektedir.
+
+![Urunler](docs/WhatsApp%20Image%202026-04-02%20at%2015.07.20.jpeg)
+
+**Urun Ekle Sayfasi** — Yalnizca admin rolundeki kullanicilar urun ekleyebilmektedir.
+
+![Urun Ekle](docs/WhatsApp%20Image%202026-04-02%20at%2015.07.20%20(1).jpeg)
+
+**Trafik Loglari** — Dispatcher uzerinden gecen tum istekler zaman, method, path, kullanici ve HTTP status bilgileriyle loglanmaktadir.
+
+![Trafik Loglari](docs/WhatsApp%20Image%202026-04-02%20at%2015.06.04.jpeg)
+
+### API Dokumantasyonu
+
+**Dispatcher Swagger UI** — Dispatcher servisi 8003 portundan dis dunyaya aciktir ve FastAPI otomatik dokumantasyonu sunmaktadir.
+
+![Dispatcher Swagger](docs/WhatsApp%20Image%202026-04-02%20at%2013.38.59.jpeg)
+
+**Auth Service (Erisim Engellendi)** — Auth servisi yalnizca ic agda (private-net) calistigindan dogrudan erisim mumkun degildir. Bu, network izolasyonunun calismakta oldugunu kanitlamaktadir.
+
+![Auth Service Erisim Engellendi](docs/WhatsApp%20Image%202026-04-02%20at%2013.38.58.jpeg)
+
+### Grafana Izleme
+
+**HTTP Requests Total** — Prometheus metrikleri Grafana uzerinden gercek zamanli olarak izlenmektedir. Yuk testi sirasinda tum servislerin trafigi gorsellestirilmistir.
+
+![Grafana Dashboard](docs/WhatsApp%20Image%202026-04-02%20at%2015.05.02.jpeg)
 
 ### TDD - Dispatcher Testleri
 
 Dispatcher servisi TDD (Red-Green-Refactor) yaklasimi ile gelistirilmistir. Test dosyasinin zaman damgasi fonksiyonel koddan oncedir.
+
 ```bash
 cd dispatcher
 pytest test_dispatcher.py
 ```
 
 ### Yuk Testi Sonuclari
+
+Locust ile farkli kullanici seviyelerinde yuk testi gerceklestirilmistir. Tum testlerde hata orani **%0** olarak gerceklesmistir.
+
+**10 Kullanici — RPS: 4.88**
+
+![Locust 10 Kullanici](docs/WhatsApp%20Image%202026-04-02%20at%2013.39.01.jpeg)
+
+**50 Kullanici — RPS: 18.5**
+
+![Locust 50 Kullanici](docs/WhatsApp%20Image%202026-04-02%20at%2013.39.00.jpeg)
+
+**100 Kullanici — RPS: 26.1**
+
+![Locust 100 Kullanici](docs/WhatsApp%20Image%202026-04-02%20at%2013.38.59%20(1).jpeg)
+
+**200 Kullanici — RPS: 93.7**
+
+![Locust 200 Kullanici](docs/WhatsApp%20Image%202026-04-02%20at%2013.55.53.jpeg)
+
+**500 Kullanici — RPS: 51.4**
+
+![Locust 500 Kullanici](docs/WhatsApp%20Image%202026-04-02%20at%2013.56.54.jpeg)
+
+#### Yuk Testi Ozet Tablosu
 
 | Kullanici | RPS | Hata Orani | Ort. Yanis Suresi |
 |---|---|---|---|
@@ -334,7 +392,7 @@ pytest test_dispatcher.py
 | 200 | 93.7 | %0 | 173 ms |
 | 500 | 51.4 | %0 | 682 ms |
 
-### Yorum
+#### Yorum
 
 10 ve 50 kullanici seviyesinde sistem stabil calismis, yanis sureleri dusuk kalmistir. 100 kullanicida RPS artmaya devam etmis ancak yanis suresi 644ms'ye yukselmeye baslamistir. Tum testlerde hata orani %0 olarak gerceklesmistir.
 
@@ -377,6 +435,3 @@ pytest test_dispatcher.py
 - **React** - Frontend arayuzu
 - **JWT** - Kimlik dogrulama
 - **Pytest** - TDD test framework
-
-
-
