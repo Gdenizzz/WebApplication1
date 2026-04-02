@@ -1,17 +1,15 @@
 from locust import HttpUser, task, between
 
-TOKEN = None
-
 class DispatcherUser(HttpUser):
     host = "http://127.0.0.1:8003"
     wait_time = between(1, 3)
 
     def on_start(self):
         response = self.client.post(
-            "http://127.0.0.1:8000/auth/login",
+            "/auth/login",
             json={
-                "email": "ayse.kaya@gmail.com",
-                "password": "Ayse2026!"
+                "email": "admin@admin.com",
+                "password": "Admin2026!"
             }
         )
         data = response.json()
@@ -33,7 +31,6 @@ class DispatcherUser(HttpUser):
         self.client.post(
             "/orders",
             json={
-                "user_id": "ayse.kaya@gmail.com",
                 "items": []
             },
             headers=self.auth_headers()
